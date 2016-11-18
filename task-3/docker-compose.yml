@@ -1,0 +1,39 @@
+version: '2'
+services:
+  realtime:
+    build: .
+    ports:
+      - "3000:3000"
+  web:
+    image: garcianavalon/task0-web
+    ports:
+     - "5000:5000"
+    volumes:
+     - .:/app
+    depends_on:
+     - redis
+  redis:
+    image: redis
+  couchdb:
+    image: klaemo/couchdb:2.0.0
+    ports:
+      - "5984:5984"
+    volumes:
+      - "/usr/local/var/lib/couchdb"
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - web
+    environment:
+      - DOCKER_HOST
+    ports:
+      - 6767:80
+  nginx:
+    image: nginx:1.10
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/servers:/etc/nginx/servers
+      - ./path/to/certs:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
