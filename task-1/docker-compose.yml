@@ -1,0 +1,26 @@
+version: '2'
+services:
+  web:
+    image: garcianavalon/task0-web
+    ports:
+     - "5000:5000"
+    volumes:
+     - .:/app
+    depends_on:
+     - redis
+  redis:
+    image: redis
+  couchdb:
+    image: klaemo/couchdb:2.0.0
+    ports:
+      - "5984:5984"
+    volumes:
+      - "/usr/local/var/lib/couchdb"
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - web
+    environment:
+      - DOCKER_HOST
+    ports:
+      - 80:80
