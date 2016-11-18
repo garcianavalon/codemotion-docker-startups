@@ -13,3 +13,9 @@ Showing through with exemplification the benefits of building your proyect or pr
 - Fuck up proof: easy to clean and regenerate
 - Unified interface for executing (run), updating (pull) and stoping
 - Focus on your app, reuse everything
+
+## Quick Reference
+- `docker-compose up` creates and starts the stack. Use `-d`to run in background.
+- `docker-compose down` destroys the stack. Use `-v` to also delete volumes.
+- `docker-compose log [service]` shows the log of a service. No service logs all. Use `-f` for following.
+- `docker-compose ps` shows the state of the active containers in the stack.
