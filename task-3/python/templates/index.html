@@ -7,32 +7,43 @@
     <title>Task 3</title>
   </head>
   <body>
-    <div class="">
+    <div>
       <h1>Welcome to Task 3</h1>
-      <p class="">
-        - You have connected to host: {{hostname}}.
-        - This website has been visited {{hits}} times.
+      <ul>
+        <li>You have connected to host: {{hostname}}.</li>
+        <li>This website has been visited {{hits}} times.</li>
       </p>
     </div>
-    <div class="">
-      <h2>This is the contents of your database</h2>
-      <div id="databaseContents" class="">
+    <div>
+      <h2>This is your history</h2>
+      <ul id="history">
 
-      </div>
+      </ul>
     </div>
-    <script src="//cdn.jsdelivr.net/pouchdb/6.0.7/pouchdb.min.js"></script>
+    <script src="http://assets.localhost/pouchdb.min.js"></script>
     <script type="text/javascript">
-      var db = new PouchDB('localdb');
-      db.put({
-        hostname: {{hostname}},
+      var db = new PouchDB('http://database.localhost/mydb');
+      var data = {
+        hostname: "{{hostname}}",
         hits: {{hits}}
-      });
+      };
 
-      db.changes().on('change', function() {
-        console.log('Ch-Ch-Changes');
-      });
+      console.log('Saving into pouchdb %o', data)
+      db.post(data);
 
-      //db.replicate.to('http://database.localhost/mydb');
+      db.allDocs({
+        include_docs: true,
+      }).then(function (result) {
+        var ul = document.getElementById("history");
+        for (var i = 0; i < result.rows.length; i++) {
+          var doc = result.rows[i].doc;
+          var li = document.createElement("li");
+          li.appendChild(document.createTextNode('You visited ' + doc.hostname + ' and got ' + doc.hits+ ' hits'));
+          ul.appendChild(li);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     </script>
   </body>
 </html>

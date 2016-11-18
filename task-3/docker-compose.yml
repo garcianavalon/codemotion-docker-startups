@@ -29,6 +29,7 @@ services:
     image: garcianavalon/task2-nginx
     volumes:
       - ./nginx/servers:/etc/nginx/servers
+      - ./assets:/var/www/assets
       # OPTIONAL SSL
       # - ./path/to/certs:/etc/nginx/ssl
     links:
