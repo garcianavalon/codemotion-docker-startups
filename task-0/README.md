@@ -6,6 +6,7 @@ In this task we will go through the basics of dockerizing your code and running 
 - Dockerfile syntax and build process
 - Layering images for efficency
 - Basic orchestration with Docker Compose
+- Using volumes for live reloading on containers
 
 ### Steps
 0. Set up
@@ -84,3 +85,5 @@ services:
 volumes:
  - ./python:/app
 ```
+7. Clean up
+- `$ docker-compose down -v`
