@@ -6,12 +6,6 @@ services:
      - redis
   redis:
     image: redis
-  couchdb:
-    image: klaemo/couchdb:2.0.0
-    ports:
-      - "5984:5984"
-    volumes:
-      - "/usr/local/var/lib/couchdb"
   lb:
     image: dockercloud/haproxy
     links:
