@@ -6,12 +6,6 @@ services:
      - redis
   redis:
     image: redis
-  couchdb:
-    image: klaemo/couchdb:2.0.0
-    ports:
-      - "5984:5984"
-    volumes:
-      - "/usr/local/var/lib/couchdb"
   lb:
     image: dockercloud/haproxy
     links:
@@ -23,12 +17,15 @@ services:
       # For linux and Docker for Mac guys
       - /var/run/docker.sock:/var/run/docker.sock
   nginx:
-    image: nginx:1.10
+    build: .
+    image: garcianavalon/task2-nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/servers:/etc/nginx/servers
       # OPTIONAL SSL
       # - ./path/to/certs:/etc/nginx/ssl
+    links:
+      - lb
     ports:
       - "80:80"
       - "443:443"
