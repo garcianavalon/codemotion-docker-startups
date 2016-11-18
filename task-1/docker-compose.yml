@@ -4,8 +4,6 @@ services:
     image: garcianavalon/task0-web
     ports:
      - "5000:5000"
-    volumes:
-     - .:/app
     depends_on:
      - redis
   redis:
