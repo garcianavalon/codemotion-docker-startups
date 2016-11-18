@@ -1,0 +1,11 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.10
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/servers:/etc/nginx/servers
+      - ./path/to/certs:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
