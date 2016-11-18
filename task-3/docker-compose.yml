@@ -1,15 +1,10 @@
 version: '2'
 services:
-  realtime:
-    build: .
-    ports:
-      - "3000:3000"
   web:
-    image: garcianavalon/task0-web
-    ports:
-     - "5000:5000"
+    build: .
+    image: garcianavalon/task3-web
     volumes:
-     - .:/app
+     - ./python:/app
     depends_on:
      - redis
   redis:
@@ -24,16 +19,21 @@ services:
     image: dockercloud/haproxy
     links:
       - web
-    environment:
-      - DOCKER_HOST
-    ports:
-      - 6767:80
-  nginx:
-    image: nginx:1.10
+    # For Docker Machine guys
+    #environment:
+    #  - DOCKER_HOST
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      # For linux and Docker for Mac guys
+      - /var/run/docker.sock:/var/run/docker.sock
+  nginx:
+    image: garcianavalon/task2-nginx
+    volumes:
       - ./nginx/servers:/etc/nginx/servers
-      - ./path/to/certs:/etc/nginx/ssl
+      # OPTIONAL SSL
+      # - ./path/to/certs:/etc/nginx/ssl
+    links:
+      - lb
+      - couchdb
     ports:
       - "80:80"
       - "443:443"

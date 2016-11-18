@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task 3</title>
+  </head>
+  <body>
+    <div class="">
+      <h1>Welcome to Task 3</h1>
+      <p class="">
+        - You have connected to host: {{hostname}}.
+        - This website has been visited {{hits}} times.
+      </p>
+    </div>
+    <div class="">
+      <h2>This is the contents of your database</h2>
+      <div id="databaseContents" class="">
+
+      </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/pouchdb/6.0.7/pouchdb.min.js"></script>
+    <script type="text/javascript">
+      var db = new PouchDB('localdb');
+      db.put({
+        hostname: {{hostname}},
+        hits: {{hits}}
+      });
+
+      db.changes().on('change', function() {
+        console.log('Ch-Ch-Changes');
+      });
+
+      //db.replicate.to('http://database.localhost/mydb');
+    </script>
+  </body>
+</html>
